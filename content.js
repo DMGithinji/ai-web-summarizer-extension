@@ -1,5 +1,3 @@
-console.log('AI Summarizer running...');
-
 function createFloatingButton() {
   const button = document.createElement('button');
   button.className = 'text-capture-btn';
@@ -14,7 +12,7 @@ function createFloatingButton() {
   document.body.appendChild(button);
 }
 
-function captureText() {
+async function captureText() {
   // Select all relevant elements
   const elements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, li');
 
@@ -49,8 +47,13 @@ function captureText() {
     }
   });
 
-  // Copy to clipboard
-  navigator.clipboard.writeText(capturedText).then(() => {
+  try {
+    // Copy to clipboard
+    await navigator.clipboard.writeText(capturedText);
+
+    // Open Claude in a new tab
+    window.open('https://claude.ai/new', '_blank');
+
     // Show success message
     const notification = document.createElement('div');
     notification.style.cssText = `
@@ -64,16 +67,16 @@ function captureText() {
       z-index: 10000;
       animation: fadeOut 2s forwards;
     `;
-    notification.textContent = 'Text copied to clipboard!';
+    notification.textContent = 'Text copied! Opening Claude...';
     document.body.appendChild(notification);
 
     // Remove notification after animation
     setTimeout(() => {
       notification.remove();
     }, 2000);
-  }).catch(err => {
+  } catch (err) {
     console.error('Failed to copy text: ', err);
-  });
+  }
 }
 
 // Add CSS animation for notification

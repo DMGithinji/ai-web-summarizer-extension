@@ -3,7 +3,15 @@
   "name": "Reframe",
   "version": "1.0",
   "description": "Website AI summarizer that uses your AI subscription",
-  "permissions": ["activeTab", "clipboardWrite"],
+  "permissions": [
+    "activeTab",
+    "clipboardWrite",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://claude.ai/*"
+  ],
   "action": {
     "default_icon": {
       "48": "icon48.png"
